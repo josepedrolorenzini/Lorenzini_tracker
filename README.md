@@ -1,6 +1,6 @@
 # Lorenzini Heritage Tracker 🇮🇹
 
-A system to document, preserve, and visualize the history of the Lorenzini family, with roots in Teglio, Sondrio (Italy).
+A system to document, preserve, and visualize the history of the Lorenzini family, with roots in Teglio, Sondrio (Italia).
 
 ---
 
