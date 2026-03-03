@@ -82,13 +82,13 @@ export default function Index({ auth, ancestors }: PageProps<{ ancestors: Ancest
                             <div className="grid gap-6 lg:grid-cols-1 lg:gap-8">
                                 <div>
                                     <div className="p-8 bg-gray-950 min-h-screen">
-                                        <h1 className="text-3xl font-bold mb-6 text-indigo-900">Lorenzini Heritage Tracker</h1>
+                                        <h1 className="text-3xl font-bold mb-6 text-emerald-600">Lorenzini Heritage Tracker</h1>
                                         <div className="grid gap-4">
                                             {ancestors.map(person => (
-                                                <div key={person.id} className="p-4 bg-slate-800 shadow rounded-lg border-l-4 border-indigo-500">
+                                                <div key={person.id} className="p-4 bg-black shadow rounded-lg border-l-4 border-emerald-700">
                                                     <h2 className="text-xl font-semibold">{person.first_name} {person.last_name}</h2>
-                                                    <p className="text-gray-600">📍 {person.birth_place} | 📅 {person.birth_date}</p>
-                                                    <p className="mt-2 text-gray-700 italic">"{person.bio}"</p>
+                                                    <p className="text-white">📍 {person.birth_place} | 📅 {person.birth_date}</p>
+                                                    <p className="mt-2 text-gray-200 italic">"{person.bio}"</p>
                                                 </div>
                                             ))}
                                         </div>

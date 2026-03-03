@@ -20,6 +20,7 @@ class AncestorFactory extends Factory
             //
             'first_name' => fake()->firstName(),
             'last_name' => 'Lorenzini', // Mantenemos el apellido familiar
+            'relationship' => fake()->randomElement(['Tatarabuelo', 'Bisabuelo', 'Abuelo', 'Padre']),
             'birth_date' => fake()->date('Y-m-d', '1920-01-01'),
             'birth_place' => fake()->city() . ', Italia',
             'bio' => fake()->paragraph(),
