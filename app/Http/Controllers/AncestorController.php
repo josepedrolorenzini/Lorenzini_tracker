@@ -62,4 +62,24 @@ class AncestorController extends Controller
             'user' => $user
         ]);
     }
+
+    public function update(Request $request, $id)
+    {
+        dd($request->all());
+        $validated = $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'relationship' => 'required',
+            'birth_date' => 'nullable|date',
+            'birth_place' => 'nullable|string|max:255',
+            'death_date' => 'nullable|date',
+            'bio' => 'nullable|string',
+        ]);
+        dd($validated);
+
+        $ancestor = \App\Models\Ancestor::findOrFail($id);
+        $ancestor->update($request->all());
+
+        return redirect()->route('dashboard.ancestors.index');
+    }
 }

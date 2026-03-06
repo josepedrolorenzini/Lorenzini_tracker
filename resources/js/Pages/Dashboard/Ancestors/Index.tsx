@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Ancestor } from "@/types/Ancestors";
-import { Head, router } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 
 type Ancestors2 = {
     first_name: string;
@@ -59,12 +59,13 @@ const Index = ({ auth, ancestors }: { auth: any; ancestors: Ancestor[] }) => {
                                         {ancestor.bio}
                                     </h3>
                                 </div>
-                                <button
+                                <Link
+                                    href={`/dashboard/ancestors/${ancestor.id}/edit`}
                                     onClick={EditMe}
                                     className="px-4 py-2 font-bold text-white dark:bg-emerald-800 hover:bg-emerald-700-700 "
                                 >
-                                    Edit
-                                </button>
+                                    View more
+                                </Link>
                             </div>
                         </div>
                     </div>

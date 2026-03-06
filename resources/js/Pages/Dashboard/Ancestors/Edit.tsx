@@ -5,7 +5,7 @@ import TextInput from "@/Components/TextInput";
 import { useEffect } from "react";
 
 const Edit = ({ ancestor }: { ancestor: Ancestor }) => {
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, post, put, processing, errors } = useForm({
         id: ancestor.id,
         first_name: ancestor.first_name,
         last_name: ancestor.last_name,
@@ -21,9 +21,15 @@ const Edit = ({ ancestor }: { ancestor: Ancestor }) => {
         console.log("Form data updated:", data);
     }, [data]);
 
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const SubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("Ancestor data:", ancestor);
+        console.log("Ancestor data:", data);
+        // otherwise stick to 'post'
+        put(route("dashboard.ancestors.update", { id: ancestor.id }), {
+            forceFormData: true,
+            onSuccess: () => console.log("Success!"),
+            onError: (errors: any) => console.log("Validation errors:", errors),
+        });
     };
     return (
         <AuthenticatedLayout
@@ -35,10 +41,13 @@ const Edit = ({ ancestor }: { ancestor: Ancestor }) => {
         >
             <>
                 <div className="py-12">
-                    <form>
+                    <form
+                        onSubmit={SubmitForm}
+                        className="mx-auto max-w-7xl sm:px-6 lg:px-8"
+                    >
                         <TextInput
                             type="hidden"
-                            value={ancestor.id}
+                            value={data.id}
                             onChange={(e) => {
                                 setData("id", e.target.value);
                             }}
@@ -49,7 +58,7 @@ const Edit = ({ ancestor }: { ancestor: Ancestor }) => {
                                 First name:
                                 <input
                                     type="text"
-                                    value={ancestor.first_name}
+                                    value={data.first_name}
                                     onChange={(e) => {
                                         setData("first_name", e.target.value);
                                     }}
@@ -64,7 +73,7 @@ const Edit = ({ ancestor }: { ancestor: Ancestor }) => {
                                 Last name:
                                 <input
                                     type="text"
-                                    value={ancestor.last_name}
+                                    value={data.last_name}
                                     onChange={(e) => {
                                         setData("last_name", e.target.value);
                                     }}
@@ -80,7 +89,7 @@ const Edit = ({ ancestor }: { ancestor: Ancestor }) => {
                                 Relationship:
                                 <input
                                     type="text"
-                                    value={ancestor.relationship}
+                                    value={data.relationship}
                                     onChange={(e) => {
                                         setData("relationship", e.target.value);
                                     }}
@@ -96,7 +105,7 @@ const Edit = ({ ancestor }: { ancestor: Ancestor }) => {
                                 Birth date:
                                 <input
                                     type="text"
-                                    value={ancestor.birth_date}
+                                    value={data.birth_date}
                                     onChange={(e) => {
                                         setData("birth_date", e.target.value);
                                     }}
@@ -112,7 +121,7 @@ const Edit = ({ ancestor }: { ancestor: Ancestor }) => {
                                 Birth place:
                                 <input
                                     type="text"
-                                    value={ancestor.birth_place}
+                                    value={data.birth_place}
                                     onChange={(e) => {
                                         setData("birth_place", e.target.value);
                                     }}
@@ -128,7 +137,7 @@ const Edit = ({ ancestor }: { ancestor: Ancestor }) => {
                                 Death date:
                                 <input
                                     type="text"
-                                    value={ancestor.death_date || ""}
+                                    value={data.death_date || ""}
                                     onChange={(e) => {
                                         setData("death_date", e.target.value);
                                     }}
@@ -143,7 +152,7 @@ const Edit = ({ ancestor }: { ancestor: Ancestor }) => {
                                 Death Place:
                                 <input
                                     type="text"
-                                    value={ancestor.death_place || ""}
+                                    value={data.death_place || ""}
                                     onChange={(e) => {
                                         setData("death_place", e.target.value);
                                     }}
@@ -158,7 +167,7 @@ const Edit = ({ ancestor }: { ancestor: Ancestor }) => {
                                 bio:
                                 <input
                                     type="text"
-                                    value={ancestor.bio || ""}
+                                    value={data.bio || ""}
                                     onChange={(e) => {
                                         setData("bio", e.target.value);
                                     }}
@@ -168,6 +177,13 @@ const Edit = ({ ancestor }: { ancestor: Ancestor }) => {
                                 />
                             </div>
                         </div>
+                        <button
+                            type="submit"
+                            disabled={processing}
+                            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50"
+                        >
+                            {processing ? "Saving..." : "Update Ancestor"}
+                        </button>
                     </form>
                 </div>
             </>
