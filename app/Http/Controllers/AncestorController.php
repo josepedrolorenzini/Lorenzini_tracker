@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use  \Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class AncestorController extends Controller
@@ -22,16 +23,18 @@ class AncestorController extends Controller
         ]);
     }
 
+    // Dashboard methods
     public function dashboardIndex()
     {
-        return inertia('Ancestors/Dashboard/Index', [
-            'ancestors' => \App\Models\Ancestor::all()
+        return inertia('Dashboard/Ancestors/Index', [
+            'ancestors' => \App\Models\Ancestor::all(),
+            'user' => auth::user()
         ]);
     }
 
     public function create()
     {
-        return inertia('Ancestors/Create');
+        return inertia('Dashboard/Ancestors/Create');
     }
     public function store(Request $request)
     {
@@ -53,9 +56,10 @@ class AncestorController extends Controller
     public function edit($id)
     {
         $ancestor = \App\Models\Ancestor::findOrFail($id);
-        return inertia('Ancestors/Edit', [
-            'ancestor' => $ancestor
+        $user = auth::user();
+        return inertia('Dashboard/Ancestors/Edit', [
+            'ancestor' => $ancestor,
+            'user' => $user
         ]);
     }
-
 }

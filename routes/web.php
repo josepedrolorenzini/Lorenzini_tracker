@@ -29,9 +29,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/ancestors', [\App\Http\Controllers\AncestorController::class, 'dashboardIndex'])->name('dashboard.ancestors.index');
     Route::get('/dashboard/ancestors/create', [\App\Http\Controllers\AncestorController::class, 'create'])->name('dashboard.ancestors.create');
     Route::post('/dashboard/ancestors', [\App\Http\Controllers\AncestorController::class, 'store'])->name('dashboard.ancestors.store');
-    Route::get('/dashboard/ancestors/{ancestor}/edit', [\App\Http\Controllers\AncestorController::class, 'edit'])->name('dashboard.ancestors.edit');
-    Route::put('/dashboard/ancestors/{ancestor}', [\App\Http\Controllers\AncestorController::class, 'update'])->name('dashboard.ancestors.update');
-    Route::delete('/dashboard/ancestors/{ancestor}', [\App\Http\Controllers\AncestorController::class, 'destroy'])->name('dashboard.ancestors.destroy');
+    Route::get('/dashboard/ancestors/{id}/edit', [\App\Http\Controllers\AncestorController::class, 'edit'])->name('dashboard.ancestors.edit');
+    Route::put('/dashboard/ancestors/{id}', [\App\Http\Controllers\AncestorController::class, 'update'])->name('dashboard.ancestors.update');
+    Route::delete('/dashboard/ancestors/{id}', [\App\Http\Controllers\AncestorController::class, 'destroy'])->name('dashboard.ancestors.destroy');
 }); // dashboard/ancestors
 
 Route::middleware('auth')->group(function () {

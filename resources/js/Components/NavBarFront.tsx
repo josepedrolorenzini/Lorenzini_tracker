@@ -1,6 +1,6 @@
 import { Link } from "@inertiajs/react";
 
-function NavBarFront({ auth }) {
+function NavBarFront({ auth }: { auth: any }) {
     return (
         <>
             <nav className="-mx-3 flex flex-1 justify-end">
