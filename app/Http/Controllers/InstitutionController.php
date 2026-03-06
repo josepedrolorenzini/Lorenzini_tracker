@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Institution;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class InstitutionController extends Controller
 {
@@ -12,7 +13,9 @@ class InstitutionController extends Controller
      */
     public function index()
     {
-        //
+        //all data
+        $institutions = Institution::all();
+        return Inertia::render('Institutions/Index', compact('institutions'));
     }
 
     /**

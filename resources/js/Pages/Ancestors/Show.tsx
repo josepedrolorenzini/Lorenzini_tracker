@@ -1,53 +1,6 @@
-import NavBarFront from '@/Components/NavBarFront';
-import { PageProps } from '@/types';
-import { Head, Link } from '@inertiajs/react';
-import { useEffect } from 'react';
+import { Head, Link } from '@inertiajs/react'
 
-
-const containerStyle = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(480px, 1fr))',
-    gap: '15px',
-    padding: '2px',
-    color: 'inherit',
-    width: '100%',
-};
-
-const boxStyle = {
-    border: '1px solid #ccc',
-    padding: '15px',
-    borderRadius: '8px',
-    backgroundColor: '#f9f9f9', // light gray background
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-    color: '#000',
-    display: 'flex',          // make it a flex container
-    flexDirection: 'column',  // stack children vertically
-    width: '100%',            // make sure it fills the grid column
-    maxWidth: 'fit-content',
-    minHeight: '120px',       // optional, make box visible even if content is small
-};
-
-export default function Welcome({
-    auth,
-    laravelVersion,
-    phpVersion,
-    repos,
-}: PageProps<{ laravelVersion: string; phpVersion: string, repos: any[] }>) {
-    const handleImageError = () => {
-        document
-            .getElementById('screenshot-container')
-            ?.classList.add('!hidden');
-        document.getElementById('docs-card')?.classList.add('!row-span-1');
-        document
-            .getElementById('docs-card-content')
-            ?.classList.add('!flex-row');
-        document.getElementById('background')?.classList.add('!hidden');
-    };
-
-    useEffect(() => {
-        console.log(repos)
-    }, [repos]);
-
+const Show = ({ ancestor, auth }: { ancestor: any; auth: any }) => {
     return (
         <>
             <Head title="Welcome" />
@@ -69,49 +22,60 @@ export default function Welcome({
                                     />
                                 </svg>
                             </div>
-                                <NavBarFront auth={auth} />
+                            <nav className="-mx-3 flex flex-1 justify-end">
+                                {auth.user ? (
+                                    <Link
+                                        href={route('dashboard')}
+                                        className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                                    >
+                                        Dashboard
+                                    </Link>
+                                ) : (
+                                    <>
+                                        <Link
+                                            href={route('welcome')}
+                                            className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                                        >
+                                            Home
+                                        </Link>
+                                        <Link
+                                            href={route('ancestors.index')}
+                                            className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                                        >
+                                            Ancestors
+                                        </Link>
+                                        <Link
+                                            href={route('login')}
+                                            className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                                        >
+                                            Log in
+                                        </Link>
+                                        <Link
+                                            href={route('register')}
+                                            className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                                        >
+                                            Register
+                                        </Link>
+                                    </>
+                                )}
+                            </nav>
                         </header>
 
                         <main className="mt-6">
                             <div className="grid gap-6 lg:grid-cols-1 lg:gap-8">
                                 <div>
-
-                                    <div style={containerStyle}>
-
-
-                                        {repos && (
-                                            <>
-                                                <div className="grid gap-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-                                                    {repos?.length > 0 ? (
-                                                        repos.map((repo, i) => (
-                                                            <div
-                                                                key={i}
-                                                                className="border p-4 rounded-lg bg-gray-900 shadow min-h-[120px] flex flex-col"
-                                                            >
-                                                                <strong>{repo.name}</strong>
-                                                                <span>{repo.visibility}</span>
-                                                                <span>{repo.owner.login}</span>
-                                                            </div>
-                                                        ))
-                                                    ) : (
-                                                        <div>No repos available</div>
-                                                    )}
-                                                </div>
-                                            </>
-
-                                        )}
-                                    </div>
-
+                                    <h1>{ancestor.first_name} {ancestor.last_name}</h1>
+                                    <p>Date of Birth: {ancestor.birth_date}</p>
+                                    <p>Place of Birth: {ancestor.birth_place}</p>
+                                    <p>Bio: {ancestor.bio}</p>
                                 </div>
                             </div>
                         </main>
-
-                        <footer className="py-16 text-center text-sm text-black dark:text-white/70">
-                            Laravel v{laravelVersion} (PHP v{phpVersion})
-                        </footer>
                     </div>
                 </div>
             </div>
         </>
-    );
+    )
 }
+
+export default Show

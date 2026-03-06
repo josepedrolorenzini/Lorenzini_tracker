@@ -24,7 +24,37 @@ return new class extends Migration {
             // ESTA ES LA LÍNEA QUE FALTA:
             $table->unique(['first_name', 'last_name']);
         });
+
+
+
+
+        /*
+        Schema::create('persone', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome'); // Nombre
+            $table->string('cognome'); // Apellido
+            $table->enum('sesso', ['M', 'F', 'Altro']); // Sexo
+
+            // Luogo e Data (Lugar y Fecha)
+            $table->date('data_nascita')->nullable(); // Fecha de nacimiento
+            $table->string('luogo_nascita')->nullable(); // Lugar de nacimiento (ej. Sondrio)
+            $table->date('data_morte')->nullable(); // Fecha de defunción
+
+            // Relazioni (Relaciones)
+            $table->foreignId('padre_id')->nullable()->constrained('persone');
+            $table->foreignId('madre_id')->nullable()->constrained('persone');
+
+            $table->text('note')->nullable(); // Notas para registros como el de Hayange
+            $table->timestamps();
+        });
+        */
+
+
     }
+
+
+
+
 
     /**
      * Reverse the migrations.

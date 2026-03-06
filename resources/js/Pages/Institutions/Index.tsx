@@ -1,58 +1,28 @@
-import NavBarFront from '@/Components/NavBarFront';
-import { PageProps } from '@/types';
-import { Head, Link } from '@inertiajs/react';
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from "react";
+import { Head, Link, usePage } from "@inertiajs/react";
+import { PageProps } from "@/types";
+import NavBarFront from "@/Components/NavBarFront";
 
-
-const containerStyle = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(480px, 1fr))',
-    gap: '15px',
-    padding: '2px',
-    color: 'inherit',
-    width: '100%',
-};
-
-const boxStyle = {
-    border: '1px solid #ccc',
-    padding: '15px',
-    borderRadius: '8px',
-    backgroundColor: '#f9f9f9', // light gray background
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-    color: '#000',
-    display: 'flex',          // make it a flex container
-    flexDirection: 'column',  // stack children vertically
-    width: '100%',            // make sure it fills the grid column
-    maxWidth: 'fit-content',
-    minHeight: '120px',       // optional, make box visible even if content is small
-};
-
-export default function Welcome({
+function Institutions({
     auth,
-    laravelVersion,
-    phpVersion,
-    repos,
-}: PageProps<{ laravelVersion: string; phpVersion: string, repos: any[] }>) {
-    const handleImageError = () => {
-        document
-            .getElementById('screenshot-container')
-            ?.classList.add('!hidden');
-        document.getElementById('docs-card')?.classList.add('!row-span-1');
-        document
-            .getElementById('docs-card-content')
-            ?.classList.add('!flex-row');
-        document.getElementById('background')?.classList.add('!hidden');
-    };
+    institutions,
+}: PageProps<{ institutions: any[] }>) {
+    const [institutionsData, setInstitutionsData] = useState(institutions);
+
+    const memoizedInstitutions = useMemo(() => {
+        console.log("Institutions");
+        console.log(usePage());
+        return institutions; //  actual institutions data
+    }, [institutions]);
 
     useEffect(() => {
-        console.log(repos)
-    }, [repos]);
+        console.log("Institutions data:", institutionsData);
+    }, [institutionsData]);
 
     return (
         <>
-            <Head title="Welcome" />
+            <Head title="istituzioni List" />
             <div className="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-
                 <div className="relative flex min-h-screen flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
                     <div className="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                         <header className="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
@@ -69,49 +39,60 @@ export default function Welcome({
                                     />
                                 </svg>
                             </div>
-                                <NavBarFront auth={auth} />
+                            <NavBarFront auth={auth} />
                         </header>
 
                         <main className="mt-6">
                             <div className="grid gap-6 lg:grid-cols-1 lg:gap-8">
                                 <div>
-
-                                    <div style={containerStyle}>
-
-
-                                        {repos && (
-                                            <>
-                                                <div className="grid gap-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-                                                    {repos?.length > 0 ? (
-                                                        repos.map((repo, i) => (
-                                                            <div
-                                                                key={i}
-                                                                className="border p-4 rounded-lg bg-gray-900 shadow min-h-[120px] flex flex-col"
-                                                            >
-                                                                <strong>{repo.name}</strong>
-                                                                <span>{repo.visibility}</span>
-                                                                <span>{repo.owner.login}</span>
-                                                            </div>
-                                                        ))
-                                                    ) : (
-                                                        <div>No repos available</div>
-                                                    )}
-                                                </div>
-                                            </>
-
-                                        )}
+                                    <div className="p-8 bg-gray-950 min-h-screen">
+                                        <h1 className="text-3xl font-bold mb-6 text-emerald-600">
+                                            Heritage Tracker - Istituzioni
+                                        </h1>
+                                        <div className="grid gap-4">
+                                            {memoizedInstitutions.map(
+                                                (istituzione) => (
+                                                    <div
+                                                        key={istituzione.id}
+                                                        className="p-4 bg-black shadow rounded-lg border-l-4 border-emerald-700"
+                                                    >
+                                                        <h2 className="text-xl font-semibold">
+                                                            {istituzione.name}
+                                                        </h2>
+                                                        <p className="text-white">
+                                                            📍{" "}
+                                                            {
+                                                                istituzione.location
+                                                            }
+                                                        </p>
+                                                        <p className="mt-2 text-gray-200 italic">
+                                                            "
+                                                            {
+                                                                istituzione.priority
+                                                            }
+                                                            "
+                                                        </p>
+                                                        <Link
+                                                            href={`istituzioni/${istituzione.id}`}
+                                                            className="text-emerald-500 hover:text-emerald-700"
+                                                        >
+                                                            More info
+                                                        </Link>
+                                                    </div>
+                                                ),
+                                            )}
+                                        </div>
                                     </div>
-
                                 </div>
                             </div>
                         </main>
 
-                        <footer className="py-16 text-center text-sm text-black dark:text-white/70">
-                            Laravel v{laravelVersion} (PHP v{phpVersion})
-                        </footer>
+                        <footer className="py-16 text-center text-sm text-black dark:text-white/70"></footer>
                     </div>
                 </div>
             </div>
         </>
     );
 }
+
+export default Institutions;

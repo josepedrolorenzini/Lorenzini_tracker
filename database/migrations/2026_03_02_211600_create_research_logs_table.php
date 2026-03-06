@@ -13,9 +13,9 @@ return new class extends Migration {
         Schema::create('research_logs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ancestor_id')->constrained()->onDelete('cascade');
-            $table->foreignId('institution_id')->constrained()->onDelete('cascade');
+            $table->foreignId('institution_id')->constrained('istituzioni')->onDelete('cascade');
             $table->date('sent_at')->nullable();
-            $table->string('status')->default('Pendiente'); // Pendiente, Enviado, Recibido, Pagado
+            $table->string('status')->default('In sospeso'); // Pendiente, Enviado, Recibido, Pagado
             $table->decimal('cost', 8, 2)->default(0); // Para los 100€ de Villa di Tirano
             $table->text('response_notes')->nullable();
             $table->timestamps();

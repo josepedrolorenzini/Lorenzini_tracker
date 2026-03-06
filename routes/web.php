@@ -6,9 +6,14 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 
-
+// routes home
 Route::get('/', [\App\Http\Controllers\GitRepositoryController::class, 'index'])->name('welcome');
+
+// ancestors
 Route::get('/ancestors', [\App\Http\Controllers\AncestorController::class, 'index'])->name('ancestors.index');
+Route::get("/ancestors/{id}", [\App\Http\Controllers\AncestorController::class, 'show'])->name('ancestors.show');
+// institutions
+Route::get('/institutions', [\App\Http\Controllers\InstitutionController::class, 'index'])->name('institutions.index');
 
 
 /// dashboard

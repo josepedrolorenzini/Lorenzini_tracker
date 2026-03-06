@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            AncestorSeeder::class
+            AncestorSeeder::class,
+            InstitutionSeeder::class,
         ]);
 
 

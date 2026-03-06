@@ -14,6 +14,14 @@ class AncestorController extends Controller
         ]);
     }
 
+    public function show($id)
+    {
+        $ancestor = \App\Models\Ancestor::findOrFail($id);
+        return inertia('Ancestors/Show', [
+            'ancestor' => $ancestor
+        ]);
+    }
+
     public function dashboardIndex()
     {
         return inertia('Ancestors/Dashboard/Index', [

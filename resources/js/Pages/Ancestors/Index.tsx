@@ -1,7 +1,8 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
-import { PageProps } from '@/types';
-import { useEffect } from 'react';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, Link } from "@inertiajs/react";
+import { PageProps } from "@/types";
+import { useEffect } from "react";
+import NavBarFront from "@/Components/NavBarFront";
 
 interface Ancestor {
     id: number;
@@ -12,17 +13,18 @@ interface Ancestor {
     bio: string;
 }
 
-export default function Index({ auth, ancestors }: PageProps<{ ancestors: Ancestor[] }>) {
-
+export default function Index({
+    auth,
+    ancestors,
+}: PageProps<{ ancestors: Ancestor[] }>) {
     useEffect(() => {
-        console.log('Ancestors data:', ancestors);
+        console.log("Ancestors data:", ancestors);
     }, [ancestors]);
 
     return (
         <>
             <Head title="Ancestors List" />
             <div className="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-
                 <div className="relative flex min-h-screen flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
                     <div className="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                         <header className="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
@@ -39,56 +41,39 @@ export default function Index({ auth, ancestors }: PageProps<{ ancestors: Ancest
                                     />
                                 </svg>
                             </div>
-                            <nav className="-mx-3 flex flex-1 justify-end">
-                                {auth.user ? (
-                                    <Link
-                                        href={route('dashboard')}
-                                        className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                                    >
-                                        Dashboard
-                                    </Link>
-                                ) : (
-                                    <>
-                                        <Link
-                                            href={route('welcome')}
-                                            className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                                        >
-                                            Home
-                                        </Link>
-                                        <Link
-                                            href={route('ancestors.index')}
-                                            className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                                        >
-                                            Ancestors
-                                        </Link>
-                                        <Link
-                                            href={route('login')}
-                                            className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                                        >
-                                            Log in
-                                        </Link>
-                                        <Link
-                                            href={route('register')}
-                                            className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                                        >
-                                            Register
-                                        </Link>
-                                    </>
-                                )}
-                            </nav>
+                            <NavBarFront auth={auth} />
                         </header>
 
                         <main className="mt-6">
                             <div className="grid gap-6 lg:grid-cols-1 lg:gap-8">
                                 <div>
                                     <div className="p-8 bg-gray-950 min-h-screen">
-                                        <h1 className="text-3xl font-bold mb-6 text-emerald-600">Lorenzini Heritage Tracker</h1>
+                                        <h1 className="text-3xl font-bold mb-6 text-emerald-600">
+                                            Lorenzini Heritage Tracker
+                                        </h1>
                                         <div className="grid gap-4">
-                                            {ancestors.map(person => (
-                                                <div key={person.id} className="p-4 bg-black shadow rounded-lg border-l-4 border-emerald-700">
-                                                    <h2 className="text-xl font-semibold">{person.first_name} {person.last_name}</h2>
-                                                    <p className="text-white">📍 {person.birth_place} | 📅 {person.birth_date}</p>
-                                                    <p className="mt-2 text-gray-200 italic">"{person.bio}"</p>
+                                            {ancestors.map((person) => (
+                                                <div
+                                                    key={person.id}
+                                                    className="p-4 bg-black shadow rounded-lg border-l-4 border-emerald-700"
+                                                >
+                                                    <h2 className="text-xl font-semibold">
+                                                        {person.first_name}{" "}
+                                                        {person.last_name}
+                                                    </h2>
+                                                    <p className="text-white">
+                                                        📍 {person.birth_place}{" "}
+                                                        | 📅 {person.birth_date}
+                                                    </p>
+                                                    <p className="mt-2 text-gray-200 italic">
+                                                        "{person.bio}"
+                                                    </p>
+                                                    <Link
+                                                        href={`ancestors/${person.id}`}
+                                                        className="text-emerald-500 hover:text-emerald-700"
+                                                    >
+                                                        More info
+                                                    </Link>
                                                 </div>
                                             ))}
                                         </div>
@@ -97,14 +82,10 @@ export default function Index({ auth, ancestors }: PageProps<{ ancestors: Ancest
                             </div>
                         </main>
 
-                        <footer className="py-16 text-center text-sm text-black dark:text-white/70">
-
-                        </footer>
+                        <footer className="py-16 text-center text-sm text-black dark:text-white/70"></footer>
                     </div>
                 </div>
             </div>
-
         </>
-
     );
 }

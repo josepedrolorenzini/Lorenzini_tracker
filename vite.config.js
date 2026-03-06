@@ -13,6 +13,9 @@ export default defineConfig({
             usePolling: true, // <--- CRUCIAL para Docker en Windows
         },
     },
+    build: {
+        sourcemap: false, // Reduce tiempo de compilación
+    },
     plugins: [
         laravel({
             input: "resources/js/app.tsx",
